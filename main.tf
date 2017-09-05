@@ -19,8 +19,8 @@ module "ec2" {
   AMI = "${module.latestAMI.ec2linuxd}"
   INSTTYPE = "t2.micro"
   VPCSG = "${module.scan.security_group}"
-  AZ = "${module.scan.names}"
-  SUBNETS = "${module.scan.subnets}"
+  //AZ = "${module.scan.names}"
+  SUBNETS = "${module.scan.computesubnet}"
 }
 
 module "ELB" {
@@ -29,4 +29,5 @@ module "ELB" {
   PORT = "80"
   DESTPORT = "443"
   INSTANCES = ["${module.ec2.ids}"]
+  SNET = ["${module.scan.computesubnet}"]
 }
