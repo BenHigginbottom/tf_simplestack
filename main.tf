@@ -31,3 +31,15 @@ module "ELB" {
   INSTANCES = ["${module.ec2.ids}"]
   SNET = ["${module.scan.computesubnet}"]
 }
+
+module "MariaRDS" {
+  source = "github.com/BenHigginbottom/tf_modules//MariaRDS"
+  identifier = "developmentdb"
+  storageamount = "10"
+  instance_class = "db.m3.medium"
+  db_name = "IAMDATABASE"
+  username = "IAMUSER"
+  password = "IAMPASSWORD"
+  dbkms = "${module.scan.rdsenckey}"
+  dbsnetgroup = "${var.dbsubnetgroup}"
+}
