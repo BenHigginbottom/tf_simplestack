@@ -23,6 +23,21 @@ module "ec2" {
   SUBNETS = "${module.scan.computesubnet}"
 }
 
+module "EBS" {
+  source = "github.com/BenHigginbottom/tf_modules//EBS"
+  Count = "2"
+  AvZ = "${module.scan.names}"
+  Size = "5"
+  EBSKey =  "${module.scan.ebsenckey}" 
+}
+
+module "EBSAttach" {
+  source = "github.com/BenHigginbottom/tf_modules//EBSAttach"
+  Count = "2"
+  VolID = "${module.EBS.volid}"
+  InstID = "${module.ec2.ids}"
+}
+
 module "ELB" {
   source = "github.com/BenHigginbottom/tf_modules//ELB"
   NAME = "Bens-Test-ELB"
