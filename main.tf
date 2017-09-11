@@ -26,7 +26,7 @@ module "ec2" {
 module "EBS" {
   source = "github.com/BenHigginbottom/tf_modules//EBS"
   Count = "2"
-  AvZ = "${module.scan.names}"
+  AvZ = "${module.ec2.AvZ}"
   Size = "5"
   EBSKey =  "${module.scan.ebsenckey}" 
 }
